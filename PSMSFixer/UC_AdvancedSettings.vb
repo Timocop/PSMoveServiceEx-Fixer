@@ -216,7 +216,7 @@ Public Class UC_AdvancedSettings
         Const CAM_HZ As Integer = 10
 
         Try
-            If (MessageBox.Show(String.Format("WARNING: This will set ALL tracker Hz to {0}! Continue?", CAM_HZ), "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
+            If (MessageBox.Show(String.Format("WARNING: This will set ALL tracker Hz to {1}!{0}Continue?", Environment.NewLine, CAM_HZ), "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
                 Return
             End If
 
@@ -232,7 +232,7 @@ Public Class UC_AdvancedSettings
         Const CAM_HZ As Integer = 40
 
         Try
-            If (MessageBox.Show(String.Format("WARNING: This will set ALL tracker Hz to {0}! Continue?", CAM_HZ), "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
+            If (MessageBox.Show(String.Format("WARNING: This will set ALL tracker Hz to {1}!{0}Continue?", Environment.NewLine, CAM_HZ), "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
                 Return
             End If
 
@@ -246,7 +246,7 @@ Public Class UC_AdvancedSettings
 
     Private Sub Button_FactoryTracker_Click(sender As Object, e As EventArgs) Handles Button_FactoryTracker.Click
         Try
-            If (MessageBox.Show("WARNING: This will factory reset ALL PSMoveService controller settings! Continue?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
+            If (MessageBox.Show("WARNING: This will factory reset ALL PSMoveService tracker settings!" & Environment.NewLine & "Continue?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
                 Return
             End If
 
@@ -259,7 +259,7 @@ Public Class UC_AdvancedSettings
                 IO.File.Delete(sFile)
             Next
 
-            MessageBox.Show(String.Format("PSMoveService controller settings have been factory reset!{0}Restart PSMoveService to take effect!", Environment.NewLine), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show(String.Format("PSMoveService tracker settings have been factory reset!{0}Restart PSMoveService to take effect!", Environment.NewLine), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
