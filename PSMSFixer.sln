@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1500
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PSMSFxier", "PSMSPlayspaceScale\PSMSFxier.vbproj", "{8AE38DA5-63F2-49E6-922E-5BEA208F77FF}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PSMSFxier", "PSMSFixer\PSMSFxier.vbproj", "{8AE38DA5-63F2-49E6-922E-5BEA208F77FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
