@@ -37,6 +37,7 @@ Public Class FormMain
 
             Dim mNewProcess As New Process()
             mNewProcess.StartInfo.FileName = sPSMSPath
+            mNewProcess.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(sPSMSPath)
             mNewProcess.StartInfo.UseShellExecute = False
             mNewProcess.Start()
         Catch ex As Exception

@@ -22,7 +22,7 @@ Public Class UC_AdvancedSettings
         NumericUpDown_OccludeArea.Maximum = Decimal.MaxValue
     End Sub
 
-    Private Sub UC_AdvancedSettings_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+    Protected Overrides Sub OnParentVisibleChanged(e As EventArgs)
         If (g_bInit) Then
             Return
         End If
@@ -38,6 +38,8 @@ Public Class UC_AdvancedSettings
 
             MessageBox.Show(ex.Message, "Unable to read configs", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
+        MyBase.OnParentVisibleChanged(e)
     End Sub
 
     Private Sub RefreshConfig()

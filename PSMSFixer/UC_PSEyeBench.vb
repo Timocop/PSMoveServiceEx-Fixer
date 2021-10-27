@@ -77,6 +77,7 @@ Public Class UC_PSEyeBench
 
                     Try
                         mCamProcess.StartInfo.FileName = sTestCamFile
+                        mCamProcess.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(sTestCamFile)
                         mCamProcess.StartInfo.UseShellExecute = False
                         mCamProcess.StartInfo.CreateNoWindow = True
 
@@ -205,13 +206,16 @@ Public Class UC_PSEyeBench
                 Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Aborted, unstable framerate! FPS reached: {1}", Environment.NewLine, iFpsChecks(Math.Max(0, i - 1))))
 
             Else
+                Me.Invoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
                 Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Finished! FPS reached: {1}", Environment.NewLine, iFpsChecks(iFpsChecks.Length - 1)))
             End If
 
         Catch ex As Threading.ThreadAbortException
+            Me.BeginInvoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
             Me.BeginInvoke(Sub() Label_BenchStatus.Text = String.Format("Test aborted!"))
             Throw
         Catch ex As Exception
+            Me.BeginInvoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
             Me.BeginInvoke(Sub() Label_BenchStatus.Text = String.Format("Test error!{1}Error: {0}", ex.Message, Environment.NewLine))
         Finally
             Me.BeginInvoke(Sub() Button_StartBench.Enabled = True)
