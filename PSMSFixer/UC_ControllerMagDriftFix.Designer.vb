@@ -71,7 +71,6 @@ Partial Class UC_ControllerMagDriftFix
         'PictureBox1
         '
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox1.Image = Global.PSMSFixer.My.Resources.Resources.PSmove_Drift_1
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(203, 128)
@@ -134,7 +133,6 @@ Partial Class UC_ControllerMagDriftFix
         'PictureBox3
         '
         Me.PictureBox3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox3.Image = Global.PSMSFixer.My.Resources.Resources.PSmove_Drift_3
         Me.PictureBox3.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(204, 128)
@@ -166,7 +164,6 @@ Partial Class UC_ControllerMagDriftFix
         'PictureBox2
         '
         Me.PictureBox2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox2.Image = Global.PSMSFixer.My.Resources.Resources.PSmove_Drift_2
         Me.PictureBox2.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(203, 128)
@@ -294,7 +291,6 @@ Partial Class UC_ControllerMagDriftFix
         '
         Me.PictureBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox4.Image = Global.PSMSFixer.My.Resources.Resources.PSmove_Drift_0
         Me.PictureBox4.Location = New System.Drawing.Point(3, 49)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(305, 156)

@@ -1,6 +1,25 @@
 ﻿Imports System.Text.RegularExpressions
 
 Public Class UC_ControllerMagDriftFix
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+        'WORKAROUND: AVs hates these embedded ressources. Enforce using satelite dll for ressources instead.
+        My.Resources.Data.Culture = New Globalization.CultureInfo("en-GB")
+        Dim mPSmove_Drift_0 = CType(My.Resources.Data.ResourceManager.GetObject("PSmove_Drift_0", New Globalization.CultureInfo("en-US")), Bitmap)
+        Dim mPSmove_Drift_1 = CType(My.Resources.Data.ResourceManager.GetObject("PSmove_Drift_1", New Globalization.CultureInfo("en-US")), Bitmap)
+        Dim mPSmove_Drift_2 = CType(My.Resources.Data.ResourceManager.GetObject("PSmove_Drift_2", New Globalization.CultureInfo("en-US")), Bitmap)
+        Dim mPSmove_Drift_3 = CType(My.Resources.Data.ResourceManager.GetObject("PSmove_Drift_3", New Globalization.CultureInfo("en-US")), Bitmap)
+
+        PictureBox1.Image = mPSmove_Drift_1
+        PictureBox2.Image = mPSmove_Drift_2
+        PictureBox3.Image = mPSmove_Drift_3
+        PictureBox4.Image = mPSmove_Drift_0
+    End Sub
 
     Private Sub ComboBox_SelectedController_DropDown(sender As Object, e As EventArgs) Handles ComboBox_SelectedController.DropDown
         Try

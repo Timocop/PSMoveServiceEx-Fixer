@@ -56,7 +56,16 @@ Public Class UC_PSEyeBench
                 Me.Invoke(Sub() ProgressBar1.Value = 0)
                 Me.Invoke(Sub() Label_BenchStatus.Text = "Creating files...")
 
-                IO.File.WriteAllBytes(sTestCamFile, My.Resources.test_camera_bin)
+                'WORKAROUND: AVs hates these embedded ressources. Enforce using satelite dll for ressources instead.
+                My.Resources.Data.Culture = New Globalization.CultureInfo("en-GB")
+                Dim iTestCameraBin = CType(My.Resources.Data.ResourceManager.GetObject("test_camera_bin", New Globalization.CultureInfo("en-US")), Byte())
+
+                'WORKAROUND: Use this instead of IO.File.WriteAllBytes(). Avira AntiVirus hates it!
+                IO.File.Delete(sTestCamFile)
+
+                Using mStream As New IO.FileStream(sTestCamFile, IO.FileMode.Create, IO.FileAccess.Write)
+                    mStream.Write(iTestCameraBin, 0, iTestCameraBin.Length)
+                End Using
 
                 Me.Invoke(Sub() Label_BenchStatus.Text = "Running test...")
 
