@@ -54,6 +54,16 @@ Partial Class UC_AdvancedSettings
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.CheckBox_ExlcudeCameras = New System.Windows.Forms.CheckBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.NumericUpDown_ControllerPrediction = New System.Windows.Forms.NumericUpDown()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.NumericUpDown_ControllerPredictionSmoothing = New System.Windows.Forms.NumericUpDown()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.NumericUpDown_ControllerPredictionHistory = New System.Windows.Forms.NumericUpDown()
+        Me.NumericUpDown_MinPointsInContour = New System.Windows.Forms.NumericUpDown()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.NumericUpDown_MinTrackerDeviation = New System.Windows.Forms.NumericUpDown()
+        Me.Label19 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown_ControllerSmoothing, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_OpticalTimeout, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_TrackerSleep, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,6 +71,11 @@ Partial Class UC_AdvancedSettings
         Me.GroupBox_ExtensionSettings.SuspendLayout()
         CType(Me.NumericUpDown_OccludeArea, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.NumericUpDown_ControllerPrediction, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown_ControllerPredictionSmoothing, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown_ControllerPredictionHistory, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown_MinPointsInContour, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown_MinTrackerDeviation, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -80,16 +95,17 @@ Partial Class UC_AdvancedSettings
         Me.Label2.Location = New System.Drawing.Point(3, 60)
         Me.Label2.Margin = New System.Windows.Forms.Padding(3, 6, 3, 6)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(202, 13)
+        Me.Label2.Size = New System.Drawing.Size(167, 13)
         Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Global controller position smoothing:"
+        Me.Label2.Text = "Controller position smoothing:"
         '
         'NumericUpDown_ControllerSmoothing
         '
         Me.NumericUpDown_ControllerSmoothing.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.NumericUpDown_ControllerSmoothing.DecimalPlaces = 2
-        Me.NumericUpDown_ControllerSmoothing.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.NumericUpDown_ControllerSmoothing.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
         Me.NumericUpDown_ControllerSmoothing.Location = New System.Drawing.Point(432, 58)
+        Me.NumericUpDown_ControllerSmoothing.Maximum = New Decimal(New Integer() {99, 0, 0, 131072})
         Me.NumericUpDown_ControllerSmoothing.Name = "NumericUpDown_ControllerSmoothing"
         Me.NumericUpDown_ControllerSmoothing.Size = New System.Drawing.Size(205, 22)
         Me.NumericUpDown_ControllerSmoothing.TabIndex = 2
@@ -130,6 +146,7 @@ Partial Class UC_AdvancedSettings
         '
         Me.NumericUpDown_OpticalTimeout.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.NumericUpDown_OpticalTimeout.Location = New System.Drawing.Point(432, 107)
+        Me.NumericUpDown_OpticalTimeout.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.NumericUpDown_OpticalTimeout.Name = "NumericUpDown_OpticalTimeout"
         Me.NumericUpDown_OpticalTimeout.Size = New System.Drawing.Size(205, 22)
         Me.NumericUpDown_OpticalTimeout.TabIndex = 6
@@ -148,6 +165,7 @@ Partial Class UC_AdvancedSettings
         '
         Me.NumericUpDown_TrackerSleep.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.NumericUpDown_TrackerSleep.Location = New System.Drawing.Point(432, 132)
+        Me.NumericUpDown_TrackerSleep.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.NumericUpDown_TrackerSleep.Name = "NumericUpDown_TrackerSleep"
         Me.NumericUpDown_TrackerSleep.Size = New System.Drawing.Size(205, 22)
         Me.NumericUpDown_TrackerSleep.TabIndex = 8
@@ -166,6 +184,7 @@ Partial Class UC_AdvancedSettings
         '
         Me.NumericUpDown_MinProjectArea.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.NumericUpDown_MinProjectArea.Location = New System.Drawing.Point(432, 182)
+        Me.NumericUpDown_MinProjectArea.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.NumericUpDown_MinProjectArea.Name = "NumericUpDown_MinProjectArea"
         Me.NumericUpDown_MinProjectArea.Size = New System.Drawing.Size(205, 22)
         Me.NumericUpDown_MinProjectArea.TabIndex = 10
@@ -196,13 +215,23 @@ Partial Class UC_AdvancedSettings
         '
         Me.GroupBox_ExtensionSettings.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label19)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.NumericUpDown_MinTrackerDeviation)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.NumericUpDown_MinPointsInContour)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label18)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.NumericUpDown_ControllerPredictionHistory)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label17)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.NumericUpDown_ControllerPredictionSmoothing)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label16)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.NumericUpDown_ControllerPrediction)
+        Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label15)
         Me.GroupBox_ExtensionSettings.Controls.Add(Me.CheckBox_OptimizedRoI)
         Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label9)
         Me.GroupBox_ExtensionSettings.Controls.Add(Me.NumericUpDown_OccludeArea)
         Me.GroupBox_ExtensionSettings.Controls.Add(Me.Label8)
         Me.GroupBox_ExtensionSettings.Location = New System.Drawing.Point(3, 231)
         Me.GroupBox_ExtensionSettings.Name = "GroupBox_ExtensionSettings"
-        Me.GroupBox_ExtensionSettings.Size = New System.Drawing.Size(634, 82)
+        Me.GroupBox_ExtensionSettings.Size = New System.Drawing.Size(634, 208)
         Me.GroupBox_ExtensionSettings.TabIndex = 13
         Me.GroupBox_ExtensionSettings.TabStop = False
         Me.GroupBox_ExtensionSettings.Text = "PSMoveServiceEx"
@@ -212,7 +241,7 @@ Partial Class UC_AdvancedSettings
         Me.CheckBox_OptimizedRoI.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CheckBox_OptimizedRoI.AutoSize = True
         Me.CheckBox_OptimizedRoI.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.CheckBox_OptimizedRoI.Location = New System.Drawing.Point(429, 47)
+        Me.CheckBox_OptimizedRoI.Location = New System.Drawing.Point(429, 175)
         Me.CheckBox_OptimizedRoI.Name = "CheckBox_OptimizedRoI"
         Me.CheckBox_OptimizedRoI.Size = New System.Drawing.Size(35, 18)
         Me.CheckBox_OptimizedRoI.TabIndex = 14
@@ -222,7 +251,7 @@ Partial Class UC_AdvancedSettings
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(6, 49)
+        Me.Label9.Location = New System.Drawing.Point(6, 177)
         Me.Label9.Margin = New System.Windows.Forms.Padding(3, 6, 3, 6)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(218, 13)
@@ -232,7 +261,8 @@ Partial Class UC_AdvancedSettings
         'NumericUpDown_OccludeArea
         '
         Me.NumericUpDown_OccludeArea.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NumericUpDown_OccludeArea.Location = New System.Drawing.Point(429, 22)
+        Me.NumericUpDown_OccludeArea.Location = New System.Drawing.Point(429, 100)
+        Me.NumericUpDown_OccludeArea.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.NumericUpDown_OccludeArea.Name = "NumericUpDown_OccludeArea"
         Me.NumericUpDown_OccludeArea.Size = New System.Drawing.Size(199, 22)
         Me.NumericUpDown_OccludeArea.TabIndex = 14
@@ -240,7 +270,7 @@ Partial Class UC_AdvancedSettings
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 24)
+        Me.Label8.Location = New System.Drawing.Point(6, 102)
         Me.Label8.Margin = New System.Windows.Forms.Padding(3, 6, 3, 6)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(218, 13)
@@ -252,7 +282,7 @@ Partial Class UC_AdvancedSettings
         Me.Button_Apply.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button_Apply.Enabled = False
         Me.Button_Apply.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button_Apply.Location = New System.Drawing.Point(509, 319)
+        Me.Button_Apply.Location = New System.Drawing.Point(509, 445)
         Me.Button_Apply.Name = "Button_Apply"
         Me.Button_Apply.Size = New System.Drawing.Size(128, 32)
         Me.Button_Apply.TabIndex = 14
@@ -263,7 +293,7 @@ Partial Class UC_AdvancedSettings
         '
         Me.Button_Refresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button_Refresh.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button_Refresh.Location = New System.Drawing.Point(375, 319)
+        Me.Button_Refresh.Location = New System.Drawing.Point(375, 445)
         Me.Button_Refresh.Name = "Button_Refresh"
         Me.Button_Refresh.Size = New System.Drawing.Size(128, 32)
         Me.Button_Refresh.TabIndex = 15
@@ -283,7 +313,7 @@ Partial Class UC_AdvancedSettings
         Me.GroupBox2.Controls.Add(Me.Button_ResetTrackerHz10)
         Me.GroupBox2.Controls.Add(Me.Button_ResetTrackerHz40)
         Me.GroupBox2.Controls.Add(Me.Label10)
-        Me.GroupBox2.Location = New System.Drawing.Point(3, 357)
+        Me.GroupBox2.Location = New System.Drawing.Point(3, 483)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(634, 126)
         Me.GroupBox2.TabIndex = 16
@@ -407,6 +437,108 @@ Partial Class UC_AdvancedSettings
         Me.CheckBox_ExlcudeCameras.Text = " "
         Me.CheckBox_ExlcudeCameras.UseVisualStyleBackColor = True
         '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(6, 24)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(3, 6, 3, 6)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(200, 13)
+        Me.Label15.TabIndex = 16
+        Me.Label15.Text = "Controller position prediction power:"
+        '
+        'NumericUpDown_ControllerPrediction
+        '
+        Me.NumericUpDown_ControllerPrediction.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumericUpDown_ControllerPrediction.DecimalPlaces = 2
+        Me.NumericUpDown_ControllerPrediction.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NumericUpDown_ControllerPrediction.Location = New System.Drawing.Point(429, 22)
+        Me.NumericUpDown_ControllerPrediction.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.NumericUpDown_ControllerPrediction.Name = "NumericUpDown_ControllerPrediction"
+        Me.NumericUpDown_ControllerPrediction.Size = New System.Drawing.Size(199, 22)
+        Me.NumericUpDown_ControllerPrediction.TabIndex = 17
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(35, 49)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(32, 6, 3, 6)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(223, 13)
+        Me.Label16.TabIndex = 18
+        Me.Label16.Text = "Controller position prediction smoothing:"
+        '
+        'NumericUpDown_ControllerPredictionSmoothing
+        '
+        Me.NumericUpDown_ControllerPredictionSmoothing.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumericUpDown_ControllerPredictionSmoothing.DecimalPlaces = 2
+        Me.NumericUpDown_ControllerPredictionSmoothing.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NumericUpDown_ControllerPredictionSmoothing.Location = New System.Drawing.Point(429, 47)
+        Me.NumericUpDown_ControllerPredictionSmoothing.Maximum = New Decimal(New Integer() {99, 0, 0, 131072})
+        Me.NumericUpDown_ControllerPredictionSmoothing.Name = "NumericUpDown_ControllerPredictionSmoothing"
+        Me.NumericUpDown_ControllerPredictionSmoothing.Size = New System.Drawing.Size(199, 22)
+        Me.NumericUpDown_ControllerPredictionSmoothing.TabIndex = 19
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(35, 74)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(32, 6, 3, 6)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(202, 13)
+        Me.Label17.TabIndex = 20
+        Me.Label17.Text = "Controller position prediction history:"
+        '
+        'NumericUpDown_ControllerPredictionHistory
+        '
+        Me.NumericUpDown_ControllerPredictionHistory.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumericUpDown_ControllerPredictionHistory.Location = New System.Drawing.Point(429, 72)
+        Me.NumericUpDown_ControllerPredictionHistory.Maximum = New Decimal(New Integer() {50, 0, 0, 0})
+        Me.NumericUpDown_ControllerPredictionHistory.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumericUpDown_ControllerPredictionHistory.Name = "NumericUpDown_ControllerPredictionHistory"
+        Me.NumericUpDown_ControllerPredictionHistory.Size = New System.Drawing.Size(199, 22)
+        Me.NumericUpDown_ControllerPredictionHistory.TabIndex = 21
+        Me.NumericUpDown_ControllerPredictionHistory.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'NumericUpDown_MinPointsInContour
+        '
+        Me.NumericUpDown_MinPointsInContour.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumericUpDown_MinPointsInContour.Location = New System.Drawing.Point(429, 125)
+        Me.NumericUpDown_MinPointsInContour.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.NumericUpDown_MinPointsInContour.Name = "NumericUpDown_MinPointsInContour"
+        Me.NumericUpDown_MinPointsInContour.Size = New System.Drawing.Size(199, 22)
+        Me.NumericUpDown_MinPointsInContour.TabIndex = 22
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(6, 127)
+        Me.Label18.Margin = New System.Windows.Forms.Padding(3, 6, 3, 6)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(151, 13)
+        Me.Label18.TabIndex = 23
+        Me.Label18.Text = "Minimum points in contour:"
+        '
+        'NumericUpDown_MinTrackerDeviation
+        '
+        Me.NumericUpDown_MinTrackerDeviation.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumericUpDown_MinTrackerDeviation.DecimalPlaces = 2
+        Me.NumericUpDown_MinTrackerDeviation.Location = New System.Drawing.Point(429, 150)
+        Me.NumericUpDown_MinTrackerDeviation.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.NumericUpDown_MinTrackerDeviation.Name = "NumericUpDown_MinTrackerDeviation"
+        Me.NumericUpDown_MinTrackerDeviation.Size = New System.Drawing.Size(199, 22)
+        Me.NumericUpDown_MinTrackerDeviation.TabIndex = 24
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(6, 152)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(3, 6, 3, 6)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(194, 13)
+        Me.Label19.TabIndex = 25
+        Me.Label19.Text = "Maximum tracker position deviation:"
+        '
         'UC_AdvancedSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -433,7 +565,7 @@ Partial Class UC_AdvancedSettings
         Me.Controls.Add(Me.Label1)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "UC_AdvancedSettings"
-        Me.Size = New System.Drawing.Size(640, 652)
+        Me.Size = New System.Drawing.Size(640, 673)
         CType(Me.NumericUpDown_ControllerSmoothing, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown_OpticalTimeout, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown_TrackerSleep, System.ComponentModel.ISupportInitialize).EndInit()
@@ -443,6 +575,11 @@ Partial Class UC_AdvancedSettings
         CType(Me.NumericUpDown_OccludeArea, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.NumericUpDown_ControllerPrediction, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown_ControllerPredictionSmoothing, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown_ControllerPredictionHistory, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown_MinPointsInContour, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown_MinTrackerDeviation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -480,4 +617,14 @@ Partial Class UC_AdvancedSettings
     Friend WithEvents Label11 As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents CheckBox_ExlcudeCameras As CheckBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents NumericUpDown_MinTrackerDeviation As NumericUpDown
+    Friend WithEvents NumericUpDown_MinPointsInContour As NumericUpDown
+    Friend WithEvents Label18 As Label
+    Friend WithEvents NumericUpDown_ControllerPredictionHistory As NumericUpDown
+    Friend WithEvents Label17 As Label
+    Friend WithEvents NumericUpDown_ControllerPredictionSmoothing As NumericUpDown
+    Friend WithEvents Label16 As Label
+    Friend WithEvents NumericUpDown_ControllerPrediction As NumericUpDown
+    Friend WithEvents Label15 As Label
 End Class

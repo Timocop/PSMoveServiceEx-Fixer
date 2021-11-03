@@ -14,12 +14,6 @@ Public Class UC_AdvancedSettings
 
         ' Add any initialization after the InitializeComponent() call.
         g_bInit = False
-
-        NumericUpDown_ControllerSmoothing.Maximum = Decimal.MaxValue
-        NumericUpDown_OpticalTimeout.Maximum = Decimal.MaxValue
-        NumericUpDown_TrackerSleep.Maximum = Decimal.MaxValue
-        NumericUpDown_MinProjectArea.Maximum = Decimal.MaxValue
-        NumericUpDown_OccludeArea.Maximum = Decimal.MaxValue
     End Sub
 
     Protected Overrides Sub OnParentVisibleChanged(e As EventArgs)
@@ -62,7 +56,12 @@ Public Class UC_AdvancedSettings
             g_mSettignsDic(NumericUpDown_MinProjectArea.Name) = New ClassSettingsKey(sTrackerSettings, "min_valid_projection_area", ClassSettingsKey.ENUM_TYPE.NUM)
             g_mSettignsDic(CheckBox_DisableRoI.Name) = New ClassSettingsKey(sTrackerSettings, "disable_roi", ClassSettingsKey.ENUM_TYPE.BOOL)
 
+            g_mSettignsExDic(NumericUpDown_ControllerPrediction.Name) = New ClassSettingsKey(sTrackerSettings, "controller_position_prediction", ClassSettingsKey.ENUM_TYPE.NUM)
+            g_mSettignsExDic(NumericUpDown_ControllerPredictionSmoothing.Name) = New ClassSettingsKey(sTrackerSettings, "controller_position_prediction_smoothing", ClassSettingsKey.ENUM_TYPE.NUM)
+            g_mSettignsExDic(NumericUpDown_ControllerPredictionHistory.Name) = New ClassSettingsKey(sTrackerSettings, "controller_position_prediction_history", ClassSettingsKey.ENUM_TYPE.NUM)
             g_mSettignsExDic(NumericUpDown_OccludeArea.Name) = New ClassSettingsKey(sTrackerSettings, "min_occluded_area_on_loss", ClassSettingsKey.ENUM_TYPE.NUM)
+            g_mSettignsExDic(NumericUpDown_MinPointsInContour.Name) = New ClassSettingsKey(sTrackerSettings, "min_points_in_contour", ClassSettingsKey.ENUM_TYPE.NUM)
+            g_mSettignsExDic(NumericUpDown_MinTrackerDeviation.Name) = New ClassSettingsKey(sTrackerSettings, "max_tracker_position_deviation", ClassSettingsKey.ENUM_TYPE.NUM)
             g_mSettignsExDic(CheckBox_OptimizedRoI.Name) = New ClassSettingsKey(sTrackerSettings, "optimized_roi", ClassSettingsKey.ENUM_TYPE.BOOL)
 
             Dim bExtensionAvaliable As Boolean = True
@@ -85,20 +84,29 @@ Public Class UC_AdvancedSettings
 
             GroupBox_ExtensionSettings.Enabled = bExtensionAvaliable
 
-            NumericUpDown_ControllerSmoothing.Value = Math.Max(0, CDec(g_mSettignsDic(NumericUpDown_ControllerSmoothing.Name).m_ValueF))
+            NumericUpDown_ControllerSmoothing.Value = NumericUpDownValueClamp(NumericUpDown_ControllerSmoothing, CDec(g_mSettignsDic(NumericUpDown_ControllerSmoothing.Name).m_ValueF))
             CheckBox_TriangulationOnly.Checked = g_mSettignsDic(CheckBox_TriangulationOnly.Name).m_ValueB
-            NumericUpDown_OpticalTimeout.Value = Math.Max(0, CDec(g_mSettignsDic(NumericUpDown_OpticalTimeout.Name).m_ValueF))
-            NumericUpDown_TrackerSleep.Value = Math.Max(0, CDec(g_mSettignsDic(NumericUpDown_TrackerSleep.Name).m_ValueF))
+            NumericUpDown_OpticalTimeout.Value = NumericUpDownValueClamp(NumericUpDown_OpticalTimeout, CDec(g_mSettignsDic(NumericUpDown_OpticalTimeout.Name).m_ValueF))
+            NumericUpDown_TrackerSleep.Value = NumericUpDownValueClamp(NumericUpDown_TrackerSleep, CDec(g_mSettignsDic(NumericUpDown_TrackerSleep.Name).m_ValueF))
             CheckBox_ExlcudeCameras.Checked = g_mSettignsDic(CheckBox_ExlcudeCameras.Name).m_ValueB
-            NumericUpDown_MinProjectArea.Value = Math.Max(0, CDec(g_mSettignsDic(NumericUpDown_MinProjectArea.Name).m_ValueF))
+            NumericUpDown_MinProjectArea.Value = NumericUpDownValueClamp(NumericUpDown_MinProjectArea, CDec(g_mSettignsDic(NumericUpDown_MinProjectArea.Name).m_ValueF))
             CheckBox_DisableRoI.Checked = g_mSettignsDic(CheckBox_DisableRoI.Name).m_ValueB
 
-            NumericUpDown_OccludeArea.Value = Math.Max(0, CDec(g_mSettignsExDic(NumericUpDown_OccludeArea.Name).m_ValueF))
+            NumericUpDown_ControllerPrediction.Value = NumericUpDownValueClamp(NumericUpDown_ControllerPrediction, CDec(g_mSettignsExDic(NumericUpDown_ControllerPrediction.Name).m_ValueF))
+            NumericUpDown_ControllerPredictionSmoothing.Value = NumericUpDownValueClamp(NumericUpDown_ControllerPredictionSmoothing, CDec(g_mSettignsExDic(NumericUpDown_ControllerPredictionSmoothing.Name).m_ValueF))
+            NumericUpDown_ControllerPredictionHistory.Value = NumericUpDownValueClamp(NumericUpDown_ControllerPredictionHistory, CDec(g_mSettignsExDic(NumericUpDown_ControllerPredictionHistory.Name).m_ValueF))
+            NumericUpDown_OccludeArea.Value = NumericUpDownValueClamp(NumericUpDown_OccludeArea, CDec(g_mSettignsExDic(NumericUpDown_OccludeArea.Name).m_ValueF))
+            NumericUpDown_MinPointsInContour.Value = NumericUpDownValueClamp(NumericUpDown_MinPointsInContour, CDec(g_mSettignsExDic(NumericUpDown_MinPointsInContour.Name).m_ValueF))
+            NumericUpDown_MinTrackerDeviation.Value = NumericUpDownValueClamp(NumericUpDown_MinTrackerDeviation, CDec(g_mSettignsExDic(NumericUpDown_MinTrackerDeviation.Name).m_ValueF))
             CheckBox_OptimizedRoI.Checked = g_mSettignsExDic(CheckBox_OptimizedRoI.Name).m_ValueB
         Finally
             g_bIgnoreEvents = False
         End Try
     End Sub
+
+    Private Function NumericUpDownValueClamp(mControl As NumericUpDown, iValue As Decimal) As Decimal
+        Return Math.Max(mControl.Minimum, Math.Min(mControl.Maximum, iValue))
+    End Function
 
     Private Sub Button_Apply_Click(sender As Object, e As EventArgs) Handles Button_Apply.Click
         Try
@@ -174,7 +182,27 @@ Public Class UC_AdvancedSettings
         SettingsChanged(sender)
     End Sub
 
+    Private Sub NumericUpDown_ControllerPrediction_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_ControllerPrediction.ValueChanged
+        SettingsChanged(sender)
+    End Sub
+
+    Private Sub NumericUpDown_ControllerPredictionSmoothing_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_ControllerPredictionSmoothing.ValueChanged
+        SettingsChanged(sender)
+    End Sub
+
+    Private Sub NumericUpDown_ControllerPredictionHistory_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_ControllerPredictionHistory.ValueChanged
+        SettingsChanged(sender)
+    End Sub
+
     Private Sub NumericUpDown_OccludeArea_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_OccludeArea.ValueChanged
+        SettingsChanged(sender)
+    End Sub
+
+    Private Sub NumericUpDown_MinPointsInContour_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_MinPointsInContour.ValueChanged
+        SettingsChanged(sender)
+    End Sub
+
+    Private Sub NumericUpDown_MinTrackerDeviation_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_MinTrackerDeviation.ValueChanged
         SettingsChanged(sender)
     End Sub
 
