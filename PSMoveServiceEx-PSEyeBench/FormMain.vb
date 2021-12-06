@@ -4,6 +4,15 @@ Public Class FormMain
     Private g_mBenchThread As Threading.Thread
     Private g_mThreadLock As New Object
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        Me.Text &= String.Format(" v.{0}", Application.ProductVersion)
+    End Sub
+
     Private Sub Button_StartBench_Click(sender As Object, e As EventArgs) Handles Button_StartBench.Click
         If (g_mBenchThread IsNot Nothing AndAlso g_mBenchThread.IsAlive) Then
             Return

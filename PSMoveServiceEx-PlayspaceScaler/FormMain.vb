@@ -7,6 +7,8 @@ Public Class FormMain
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call. 
+        Me.Text &= String.Format(" v.{0}", Application.ProductVersion)
+
         ComboBox_ScaleAxis.SelectedIndex = 0
     End Sub
 

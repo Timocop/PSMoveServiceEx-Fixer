@@ -7,6 +7,8 @@ Public Class FormMain
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+
+        Me.Text &= String.Format(" v.{0}", Application.ProductVersion)
     End Sub
 
     Private Sub ComboBox_SelectedController_DropDown(sender As Object, e As EventArgs) Handles ComboBox_SelectedController.DropDown
