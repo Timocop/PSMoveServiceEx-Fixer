@@ -4,12 +4,21 @@ Public Class FormMain
     Private g_mBenchThread As Threading.Thread
     Private g_mThreadLock As New Object
 
+    Private g_iFpsChecks As Integer() = New Integer() {10, 20, 30, 40, 50, 60, 75, 83}
+
     Public Sub New()
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+
+        ComboBox_Sensitivity.Items.Clear()
+        ComboBox_Sensitivity.Items.Add("Low")
+        ComboBox_Sensitivity.Items.Add("Normal")
+        ComboBox_Sensitivity.Items.Add("High")
+        ComboBox_Sensitivity.SelectedIndex = 1
+
         Me.Text &= String.Format(" v.{0}", Application.ProductVersion)
     End Sub
 
@@ -18,7 +27,17 @@ Public Class FormMain
             Return
         End If
 
-        g_mBenchThread = New Threading.Thread(Sub() BenchmarkThread(1000))
+        Dim iMaxAvgFPs = 5
+        Select Case (ComboBox_Sensitivity.SelectedIndex)
+            Case 0
+                iMaxAvgFPs = 15
+            Case 1
+                iMaxAvgFPs = 10
+            Case 2
+                iMaxAvgFPs = 5
+        End Select
+
+        g_mBenchThread = New Threading.Thread(Sub() BenchmarkThread(New TimeSpan(0, 0, 30), 100, iMaxAvgFPs))
         g_mBenchThread.IsBackground = True
         g_mBenchThread.Start()
     End Sub
@@ -28,7 +47,17 @@ Public Class FormMain
             Return
         End If
 
-        g_mBenchThread = New Threading.Thread(Sub() BenchmarkThread(100))
+        Dim iMaxAvgFPs = 5
+        Select Case (ComboBox_Sensitivity.SelectedIndex)
+            Case 0
+                iMaxAvgFPs = 15
+            Case 1
+                iMaxAvgFPs = 10
+            Case 2
+                iMaxAvgFPs = 5
+        End Select
+
+        g_mBenchThread = New Threading.Thread(Sub() BenchmarkThread(New TimeSpan(0, 0, 5), 100, iMaxAvgFPs))
         g_mBenchThread.IsBackground = True
         g_mBenchThread.Start()
     End Sub
@@ -42,25 +71,23 @@ Public Class FormMain
         End If
     End Sub
 
-    Const MAX_FPS_DIFF As Integer = 10
-
-    Private Sub BenchmarkThread(iMaxFpsSamples As Integer)
+    Private Sub BenchmarkThread(mBenchTime As TimeSpan, iSamplesSplit As Integer, iMaxFpsDiff As Integer, Optional iStartFpsIndex As Integer = 0)
         Try
             Me.Invoke(Sub() Button_StartBench.Enabled = False)
             Me.Invoke(Sub() Button_StartQuickBench.Enabled = False)
+            Me.Invoke(Sub() ComboBox_Sensitivity.Enabled = False)
             Me.Invoke(Sub() Button_BenchAbort.Enabled = True)
 
             Dim bHang As Boolean = False
             Dim bBadFPS As Boolean = False
-            Dim bNoCameras As Boolean = False
+            Dim iTotalCameras As Integer = 0
             Dim bFailed As Boolean = False
-            Dim iFpsChecks As Integer() = New Integer() {10, 20, 30, 40, 50, 60, 75, 83}
             Dim i As Integer
 
             Dim sTestCamFile As String = IO.Path.Combine(IO.Path.GetTempPath(), IO.Path.GetRandomFileName() & ".exe")
             Try
 
-                Me.Invoke(Sub() ProgressBar1.Maximum = iFpsChecks.Length)
+                Me.Invoke(Sub() ProgressBar1.Maximum = g_iFpsChecks.Length)
                 Me.Invoke(Sub() ProgressBar1.Value = 0)
                 Me.Invoke(Sub() Label_BenchStatus.Text = "Creating files...")
 
@@ -78,7 +105,7 @@ Public Class FormMain
                 Dim sReadLines As New List(Of String)
                 Dim mReadLinesTimeout As New Stopwatch
 
-                For i = 0 To iFpsChecks.Length - 1
+                For i = iStartFpsIndex To g_iFpsChecks.Length - 1
                     Dim mCamProcess As New Process()
 
                     Try
@@ -92,7 +119,7 @@ Public Class FormMain
 
                         mCamProcess.Start()
 
-                        mCamProcess.StandardInput.WriteLine(CStr(iFpsChecks(i)))
+                        mCamProcess.StandardInput.WriteLine(CStr(g_iFpsChecks(i)))
                         mCamProcess.StandardInput.WriteLine("480")
 
                         AddHandler mCamProcess.OutputDataReceived, Sub(sender As Object, e As DataReceivedEventArgs)
@@ -110,6 +137,8 @@ Public Class FormMain
                         mCamProcess.BeginOutputReadLine()
 
                         Dim iFPSList As New List(Of Double)
+                        Dim mSampleTime As New Stopwatch
+                        mSampleTime.Start()
 
                         While True
                             Threading.Thread.Sleep(100)
@@ -139,9 +168,14 @@ Public Class FormMain
                                     End If
 
                                     For Each sLine In sReadLines
-                                        If (sLine.Contains("found 0 devices.")) Then
-                                            bNoCameras = True
-                                            Exit While
+                                        If (sLine.Contains("ps3eye::PS3EYECam::getDevices() found") AndAlso sLine.Contains("devices.")) Then
+                                            Dim sSplit As String() = sLine.Split(" "c)
+                                            If (sSplit.Length > 2) Then
+                                                Dim sCameras As String = sSplit(sSplit.Length - 2)
+                                                Dim iCameras As Integer = CInt(sCameras)
+
+                                                iTotalCameras = iCameras
+                                            End If
                                         End If
 
                                         If (sLine.Contains("Fame rate is set to") AndAlso sLine.Contains("and was actually") AndAlso sLine.Contains("fps")) Then
@@ -160,7 +194,11 @@ Public Class FormMain
                                 End SyncLock
                             End If
 
-                            If (iFPSList.Count > iMaxFpsSamples) Then
+                            If (iTotalCameras < 1) Then
+                                Exit While
+                            End If
+
+                            If (iFPSList.Count > iSamplesSplit) Then
                                 Dim iFPSCount As ULong = 0
 
                                 For j = 0 To iFPSList.Count - 1
@@ -169,13 +207,18 @@ Public Class FormMain
 
                                 Dim iAvgFPS = (iFPSCount / iFPSList.Count - 1)
 
-                                If (iAvgFPS < iFpsChecks(i) - MAX_FPS_DIFF) Then
+                                Debug.WriteLine("AVG FPS: " & iAvgFPS)
+
+                                If (iAvgFPS < g_iFpsChecks(i) - iMaxFpsDiff) Then
                                     bBadFPS = True
                                     Exit While
                                 End If
 
                                 iFPSList.Clear()
-                                Exit While
+
+                                If (mSampleTime.ElapsedTicks > mBenchTime.Ticks) Then
+                                    Exit While
+                                End If
                             End If
                         End While
                     Finally
@@ -186,7 +229,7 @@ Public Class FormMain
                         End Try
                     End Try
 
-                    If (bHang OrElse bBadFPS OrElse bNoCameras) Then
+                    If (bHang OrElse bBadFPS OrElse iTotalCameras < 1) Then
                         Exit For
                     End If
 
@@ -199,21 +242,21 @@ Public Class FormMain
                 End Try
             End Try
 
-            If (bNoCameras) Then
+            If (iTotalCameras < 1) Then
                 Me.Invoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
                 Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Aborted, no cameras found!", Environment.NewLine))
 
             ElseIf (bHang) Then
                 Me.Invoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
-                Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Aborted, camera stream Hung! FPS reached: {1}", Environment.NewLine, iFpsChecks(Math.Max(0, i - 1))))
+                Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Aborted, camera stream Hung! Cameras: {1}, FPS reached: {2}", Environment.NewLine, iTotalCameras, g_iFpsChecks(Math.Max(0, i - 1))))
 
             ElseIf (bBadFPS) Then
                 Me.Invoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
-                Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Aborted, unstable framerate! FPS reached: {1}", Environment.NewLine, iFpsChecks(Math.Max(0, i - 1))))
+                Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Aborted, unstable framerate! Cameras: {1}, FPS reached: {2}", Environment.NewLine, iTotalCameras, g_iFpsChecks(Math.Max(0, i - 1))))
 
             Else
                 Me.Invoke(Sub() ProgressBar1.Value = ProgressBar1.Maximum)
-                Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Finished! FPS reached: {1}", Environment.NewLine, iFpsChecks(iFpsChecks.Length - 1)))
+                Me.Invoke(Sub() Label_BenchStatus.Text = String.Format("Test ended!{0}Result: Finished! Cameras: {1}, FPS reached: {2}", Environment.NewLine, iTotalCameras, g_iFpsChecks(g_iFpsChecks.Length - 1)))
             End If
 
         Catch ex As Threading.ThreadAbortException
@@ -226,6 +269,7 @@ Public Class FormMain
         Finally
             Me.BeginInvoke(Sub() Button_StartBench.Enabled = True)
             Me.BeginInvoke(Sub() Button_StartQuickBench.Enabled = True)
+            Me.BeginInvoke(Sub() ComboBox_Sensitivity.Enabled = True)
             Me.BeginInvoke(Sub() Button_BenchAbort.Enabled = False)
         End Try
     End Sub

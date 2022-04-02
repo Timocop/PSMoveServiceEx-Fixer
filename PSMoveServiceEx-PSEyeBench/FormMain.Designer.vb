@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormMain
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If (disposing) Then
@@ -24,7 +24,7 @@ Partial Class FormMain
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
         Me.Button_BenchAbort = New System.Windows.Forms.Button()
@@ -33,6 +33,8 @@ Partial Class FormMain
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Button_StartBench = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.ComboBox_Sensitivity = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Button_BenchAbort
@@ -103,12 +105,35 @@ Partial Class FormMain
         Me.Label1.Text = "A simple PSEye camera stability test tool to check if your cameras are stable eno" &
     "ugh on different framerates."
         '
+        'ComboBox_Sensitivity
+        '
+        Me.ComboBox_Sensitivity.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ComboBox_Sensitivity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox_Sensitivity.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.ComboBox_Sensitivity.FormattingEnabled = True
+        Me.ComboBox_Sensitivity.Location = New System.Drawing.Point(79, 248)
+        Me.ComboBox_Sensitivity.Name = "ComboBox_Sensitivity"
+        Me.ComboBox_Sensitivity.Size = New System.Drawing.Size(129, 21)
+        Me.ComboBox_Sensitivity.TabIndex = 12
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(12, 251)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(61, 13)
+        Me.Label2.TabIndex = 13
+        Me.Label2.Text = "Sensitivity:"
+        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(703, 281)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.ComboBox_Sensitivity)
         Me.Controls.Add(Me.Button_BenchAbort)
         Me.Controls.Add(Me.Button_StartQuickBench)
         Me.Controls.Add(Me.Label_BenchStatus)
@@ -121,6 +146,7 @@ Partial Class FormMain
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "PSMoveServiceEx - PSEye Stability Test"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -130,4 +156,6 @@ Partial Class FormMain
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Button_StartBench As Button
     Friend WithEvents Label1 As Label
+    Friend WithEvents ComboBox_Sensitivity As ComboBox
+    Friend WithEvents Label2 As Label
 End Class
