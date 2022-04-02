@@ -1,5 +1,5 @@
 # PSMoveService-Fixer
-General helper application for PSMoveService.
+General helper application for PSMoveServiceEx.
 
 # Features
 #### Playspace Scaling
