@@ -10,6 +10,3 @@ General helper application for PSMoveServiceEx.
 
 #### PSEye Camera Stability Test
 ![](https://i.imgur.com/9pD55NI.png)
-
-#### Advanced Settings
-![](https://i.imgur.com/xnUJa0y.png)
