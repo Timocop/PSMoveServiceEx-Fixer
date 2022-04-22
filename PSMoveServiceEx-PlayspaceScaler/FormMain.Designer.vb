@@ -107,6 +107,7 @@ Partial Class FormMain
         Me.ComboBox_ScaleAxis.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox_ScaleAxis.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox_ScaleAxis.Enabled = False
         Me.ComboBox_ScaleAxis.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.ComboBox_ScaleAxis.FormattingEnabled = True
         Me.ComboBox_ScaleAxis.Items.AddRange(New Object() {"All (X, Y, Z)", "X", "Y", "Z"})
