@@ -1,3 +1,6 @@
+# PSMOVESERVICEEX-FIXER IS NOW OBSOLETE!
+### [PSMoveServiceEx v0.16 and above](https://github.com/Timocop/PSMoveServiceEx/releases) have these features build in!
+
 # PSMoveService-Fixer
 General helper application for PSMoveServiceEx.
 
